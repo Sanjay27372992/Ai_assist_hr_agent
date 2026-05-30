@@ -95,7 +95,6 @@ DATABASES = {
 }
 
 
-
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'
 
