@@ -12,9 +12,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-fallback-key')
 DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = [host.strip() for host in config('ALLOWED_HOSTS', default='localhost,127.0.0.1,agent-website-yuuo.onrender.com,*.onrender.com').split(',') if host.strip()]
+ALLOWED_HOSTS = [host.strip() for host in config('ALLOWED_HOSTS', default='').split(',') if host.strip()]
 if DEBUG:
     ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS += [
+        'aiassisthragent-production.up.railway.app',
+        'ai-assist-hr-agent.vercel.app',
+    ]
 
 # AI Integration
 GEMINI_API_KEY = config('GEMINI_API_KEY', default='')
@@ -151,7 +156,7 @@ SIMPLE_JWT = {
 # CORS Configuration
 CORS_ALLOWED_ORIGINS = config(
     'CORS_ALLOWED_ORIGINS',
-    default='http://localhost:3000,http://localhost:5173,https://hrms-agent.vercel.app'
+    default='http://localhost:3000,http://localhost:5173,https://ai-assist-hr-agent.vercel.app'
 ).split(',')
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
@@ -166,4 +171,8 @@ CORS_ALLOW_HEADERS = [
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
+]
+CSRF_TRUSTED_ORIGINS = [
+    'https://ai-assist-hr-agent.vercel.app',
+    'https://aiassisthragent-production.up.railway.app',
 ]
